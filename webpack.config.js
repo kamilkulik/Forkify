@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/js/index.js',
+    entry: ['babel-polyfill', './src/js/index.js'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/bundle.js'
@@ -15,5 +15,16 @@ module.exports = {
             filename: 'index.html',
             template: './src/index.html'
         })
-    ]
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.js$/, // regular expression to include a file that ends with .js
+                exclude: /node_modules/, // regular expression to find a directory with specific name
+                use: {
+                    loader: 'babel-loader'
+                }
+            }
+        ]
+    }
 }
